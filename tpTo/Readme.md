@@ -1,5 +1,6 @@
 
 # **TpTo | A Simple teleport command with xp cost**
+## **MINECRAFT 1.12.2 FORGE 2860 ONLY**
 ---
 ## **Usage:**
     /tpto <player>
