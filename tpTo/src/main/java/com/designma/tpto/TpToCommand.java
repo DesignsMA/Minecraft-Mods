@@ -27,9 +27,22 @@ public class TpToCommand extends CommandBase {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         if (sender instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) sender;
+
+            // Check if player is mounted
+            if (player.isRiding()) {
+                player.dismountRidingEntity();
+                player.sendMessage(new TextComponentString("Dismounting before teleporting..."));
+            }
             if (args.length == 1) {
                 EntityPlayer target = server.getPlayerList().getPlayerByUsername(args[0]);
                 if (target != null) {
+
+                    // Check if target is in different dimension
+                    if (player.dimension != target.dimension) {
+                        player.sendMessage(new TextComponentString("Cannot teleport to players in other dimensions!"));
+                        return;
+                    }
+
                     double distanceToPlayer = (double) Math.sqrt(
                             Math.pow(target.posX - player.posX, 2) +
                                     Math.pow(target.posY - player.posY, 2) +
